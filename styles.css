@@ -436,6 +436,13 @@ textarea {
   gap: 8px;
 }
 
+.file-actions {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .file-chip {
   border: 0;
   border-radius: 999px;
@@ -447,11 +454,23 @@ textarea {
   overflow-wrap: anywhere;
 }
 
-.file-open {
+.file-action {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.file-open,
+.file-download {
   cursor: pointer;
 }
 
-.file-open:hover {
+.file-action:hover {
   background: #d7ebe7;
 }
 

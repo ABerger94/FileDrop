@@ -7,7 +7,7 @@
     "default_title": "FileDrop",
     "default_popup": "index.html"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs"],
   "icons": {
     "16": "icon.svg",
     "48": "icon.svg",

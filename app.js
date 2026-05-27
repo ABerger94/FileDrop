@@ -240,6 +240,11 @@ function dataUrlToBlob(dataUrl) {
   return new Blob([bytes], { type: mimeType });
 }
 
+function createFileUrl(file) {
+  const blob = dataUrlToBlob(file.dataUrl);
+  return URL.createObjectURL(blob);
+}
+
 function openStoredFile(fileId) {
   const file = findStoredFile(fileId);
 
@@ -248,15 +253,46 @@ function openStoredFile(fileId) {
     return;
   }
 
-  const blob = dataUrlToBlob(file.dataUrl);
-  const url = URL.createObjectURL(blob);
+  const url = createFileUrl(file);
+
+  if (globalThis.chrome?.tabs?.create) {
+    chrome.tabs.create({ url }, () => {
+      if (chrome.runtime.lastError) {
+        downloadStoredFile(fileId);
+      }
+    });
+    window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+    return;
+  }
+
+  const openedWindow = window.open(url, "_blank", "noopener");
+
+  if (!openedWindow) {
+    downloadStoredFile(fileId);
+    URL.revokeObjectURL(url);
+    return;
+  }
+
+  window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+
+function downloadStoredFile(fileId) {
+  const file = findStoredFile(fileId);
+
+  if (!file?.dataUrl) {
+    showToast("This file was saved before file opening was added.");
+    return;
+  }
+
+  const url = createFileUrl(file);
   const link = document.createElement("a");
   link.href = url;
-  link.target = "_blank";
-  link.rel = "noopener";
   link.download = file.name;
+  link.style.display = "none";
+  document.body.append(link);
   link.click();
-  window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function showToast(message) {
@@ -454,7 +490,13 @@ function renderFileChips(files) {
         .map((file) => {
           const label = `${file.name} - ${formatBytes(file.size)}`;
           return file.dataUrl
-            ? `<button class="file-chip file-open" type="button" data-file-id="${escapeHtml(file.id)}">${escapeHtml(label)}</button>`
+            ? `
+              <span class="file-actions">
+                <span class="file-chip">${escapeHtml(label)}</span>
+                <button class="file-action file-open" type="button" data-file-id="${escapeHtml(file.id)}">Open</button>
+                <button class="file-action file-download" type="button" data-file-id="${escapeHtml(file.id)}">Download</button>
+              </span>
+            `
             : `<span class="file-chip unavailable-file">${escapeHtml(label)} - unavailable</span>`;
         })
         .join("")}
@@ -660,8 +702,16 @@ els.communityForm.addEventListener("submit", async (event) => {
 
 document.addEventListener("click", (event) => {
   const openButton = event.target.closest(".file-open");
-  if (!openButton) return;
-  openStoredFile(openButton.dataset.fileId);
+  const downloadButton = event.target.closest(".file-download");
+
+  if (openButton) {
+    openStoredFile(openButton.dataset.fileId);
+    return;
+  }
+
+  if (downloadButton) {
+    downloadStoredFile(downloadButton.dataset.fileId);
+  }
 });
 
 els.generateUserId.addEventListener("click", () => {
