@@ -20,6 +20,29 @@ node server.js
 
 Open `http://127.0.0.1:4180` from this folder.
 
+## Run as Desktop App
+
+FileDrop now includes a Tauri desktop wrapper in `src-tauri/`. The browser extension files remain in the project root, so plugin functionality is preserved.
+
+Prerequisites:
+
+- Node.js
+- Rust/Cargo
+- Tauri Windows prerequisites
+
+Install dependencies and run the desktop shell:
+
+```powershell
+npm install
+npm run desktop:dev
+```
+
+Build a standalone Windows app:
+
+```powershell
+npm run desktop:build
+```
+
 ## Load as Browser Extension
 
 1. Open Chrome or Edge extensions.

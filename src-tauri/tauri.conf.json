@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "FileDrop",
+  "version": "0.1.0",
+  "identifier": "com.aberger94.filedrop",
+  "build": {
+    "beforeDevCommand": "node server.js",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://127.0.0.1:4180",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "FileDrop",
+        "width": 1100,
+        "height": 760,
+        "minWidth": 780,
+        "minHeight": 600,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all"
+  }
+}
