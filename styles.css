@@ -24,6 +24,14 @@ body {
   color: var(--ink);
 }
 
+html.extension-mode,
+html.extension-mode body {
+  width: 780px;
+  min-width: 780px;
+  min-height: 600px;
+  overflow: auto;
+}
+
 button,
 input,
 select,
@@ -35,6 +43,11 @@ textarea {
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
   min-height: 100vh;
+}
+
+.extension-mode .app-shell {
+  grid-template-columns: 220px minmax(0, 1fr);
+  min-height: 600px;
 }
 
 .sidebar {
@@ -118,6 +131,10 @@ textarea {
   min-height: 100vh;
   padding: 24px;
   background: var(--bg);
+}
+
+.extension-mode .auth-screen {
+  min-height: 600px;
 }
 
 .auth-card {
@@ -225,6 +242,11 @@ textarea {
   padding: 28px;
 }
 
+.extension-mode .workspace,
+.extension-mode .sidebar {
+  padding: 18px;
+}
+
 .workspace-header {
   display: flex;
   align-items: center;
@@ -243,6 +265,15 @@ textarea {
 .workspace-header h2 {
   font-size: 34px;
   line-height: 1.1;
+}
+
+.extension-mode .workspace-header {
+  display: grid;
+  gap: 12px;
+}
+
+.extension-mode .workspace-header h2 {
+  font-size: 28px;
 }
 
 .ghost-button,
@@ -296,6 +327,10 @@ textarea {
   grid-template-columns: minmax(320px, 440px) minmax(0, 1fr);
   gap: 18px;
   align-items: start;
+}
+
+.extension-mode .panel-grid {
+  grid-template-columns: 1fr;
 }
 
 .tool-panel,

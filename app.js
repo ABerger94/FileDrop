@@ -1,5 +1,7 @@
 const STORAGE_KEY = "filedrop-demo-state-v2";
 
+document.documentElement.classList.toggle("extension-mode", location.protocol === "chrome-extension:");
+
 const seedOrganizations = [
   { id: "org-greenline", name: "Greenline Labs", prefix: "GL" },
   { id: "org-nexora", name: "Nexora Group", prefix: "NX" },
