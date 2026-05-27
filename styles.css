@@ -537,3 +537,12 @@ textarea {
     display: grid;
   }
 }
+
+.extension-mode .nav-tabs {
+  grid-template-columns: 1fr;
+}
+
+.extension-mode .nav-tab {
+  width: 100%;
+  text-align: left;
+}
