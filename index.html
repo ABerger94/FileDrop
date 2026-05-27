@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FileDrop</title>
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main id="authScreen" class="auth-screen">
+      <section class="auth-card">
+        <div class="brand auth-brand">
+          <img class="brand-icon" src="./icon.svg" alt="" />
+          <div>
+            <h1>FileDrop</h1>
+            <p>Secure file sharing</p>
+          </div>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <div class="panel-heading">
+            <h2>Sign in</h2>
+            <p>Use your organization account to send and receive files.</p>
+          </div>
+
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" name="loginEmail" type="email" autocomplete="email" required />
+
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" name="loginPassword" type="password" autocomplete="current-password" required />
+
+          <button class="primary-button" type="submit">Sign In</button>
+        </form>
+
+        <div class="demo-logins">
+          <strong>Demo logins</strong>
+          <span>Admin: admin@greenline.test / admin123</span>
+          <span>User: maya@greenline.test / user123</span>
+        </div>
+      </section>
+    </main>
+
+    <div id="appShell" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <img class="brand-icon" src="./icon.svg" alt="" />
+          <div>
+            <h1>FileDrop</h1>
+            <p>Secure file sharing</p>
+          </div>
+        </div>
+
+        <section class="profile-panel">
+          <span class="profile-label">Signed in</span>
+          <strong id="sessionName"></strong>
+          <div class="profile-meta">
+            <span id="sessionUserId"></span>
+            <span id="sessionOrg"></span>
+            <span id="sessionRole"></span>
+          </div>
+          <button id="logoutButton" class="sidebar-button" type="button">Sign Out</button>
+        </section>
+
+        <nav class="nav-tabs" aria-label="Share destinations">
+          <button class="nav-tab active" data-view="direct" type="button">Direct Send</button>
+          <button class="nav-tab" data-view="community" type="button">Community Board</button>
+          <button class="nav-tab" data-view="inbox" type="button">Inbox</button>
+          <button id="adminTab" class="nav-tab admin-only" data-view="admin" type="button">Admin</button>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="workspace-header">
+          <div>
+            <p class="eyebrow">Organization file exchange</p>
+            <h2 id="viewTitle">Direct Send</h2>
+          </div>
+          <button id="resetDemo" class="ghost-button" type="button">Reset Demo Data</button>
+        </header>
+
+        <section id="directView" class="view active">
+          <div class="panel-grid">
+            <form id="directForm" class="tool-panel">
+              <div class="panel-heading">
+                <h3>Send files</h3>
+                <p>Use a recipient ID from your organization or an external FileDrop user.</p>
+              </div>
+
+              <label for="recipientId">Recipient user ID</label>
+              <input id="recipientId" name="recipientId" placeholder="Example: GL-2048 or EXT-8157" required />
+
+              <label for="directMessage">Message</label>
+              <textarea id="directMessage" name="directMessage" rows="3" placeholder="Add context for the recipient"></textarea>
+
+              <div id="directDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload direct files">
+                <input id="directFiles" name="directFiles" type="file" multiple />
+                <strong>Drop files here</strong>
+                <span>or choose files from your device</span>
+              </div>
+
+              <ul id="directFileList" class="file-list"></ul>
+              <button class="primary-button" type="submit">Send to User</button>
+            </form>
+
+            <section class="directory-panel">
+              <div class="panel-heading">
+                <h3>Known recipients</h3>
+                <p>Same-organization users and external users can receive files by ID.</p>
+              </div>
+              <div id="recipientDirectory" class="directory-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="communityView" class="view">
+          <div class="panel-grid">
+            <form id="communityForm" class="tool-panel">
+              <div class="panel-heading">
+                <h3>Post to organization</h3>
+                <p>Files posted here are visible to everyone in your current organization.</p>
+              </div>
+
+              <label for="postTitle">Post title</label>
+              <input id="postTitle" name="postTitle" placeholder="Example: Q3 onboarding files" required />
+
+              <label for="postMessage">Post message</label>
+              <textarea id="postMessage" name="postMessage" rows="3" placeholder="Tell the organization what this file is for"></textarea>
+
+              <div id="communityDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload community files">
+                <input id="communityFiles" name="communityFiles" type="file" multiple />
+                <strong>Drop files here</strong>
+                <span>or choose files from your device</span>
+              </div>
+
+              <ul id="communityFileList" class="file-list"></ul>
+              <button class="primary-button" type="submit">Post to Board</button>
+            </form>
+
+            <section class="board-panel">
+              <div class="panel-heading">
+                <h3>Community Board</h3>
+                <p id="boardScope"></p>
+              </div>
+              <div id="communityBoard" class="activity-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="inboxView" class="view">
+          <section class="board-panel full-width">
+            <div class="panel-heading">
+              <h3>Received files</h3>
+              <p>Direct files sent to your user ID and board files from your organization.</p>
+            </div>
+            <div id="inboxList" class="activity-list"></div>
+          </section>
+        </section>
+
+        <section id="adminView" class="view">
+          <div class="panel-grid">
+            <form id="addUserForm" class="tool-panel">
+              <div class="panel-heading">
+                <h3>Add user</h3>
+                <p>Create organization users, assign roles, and generate unique IDs.</p>
+              </div>
+
+              <label for="newUserName">Full name</label>
+              <input id="newUserName" name="newUserName" placeholder="Example: Sam Rivera" required />
+
+              <label for="newUserEmail">Email</label>
+              <input id="newUserEmail" name="newUserEmail" type="email" placeholder="sam@company.com" required />
+
+              <label for="newUserPassword">Temporary password</label>
+              <input id="newUserPassword" name="newUserPassword" type="text" placeholder="Set a temporary password" required />
+
+              <label for="newUserOrg">Organization</label>
+              <select id="newUserOrg" name="newUserOrg"></select>
+
+              <label for="newUserRole">Role</label>
+              <select id="newUserRole" name="newUserRole">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+
+              <label for="newUserId">Unique user ID</label>
+              <div class="inline-control">
+                <input id="newUserId" name="newUserId" required />
+                <button id="generateUserId" class="ghost-button" type="button">Generate</button>
+              </div>
+
+              <button class="primary-button" type="submit">Create User</button>
+            </form>
+
+            <section class="board-panel">
+              <div class="panel-heading">
+                <h3>Organization users</h3>
+                <p id="adminScope"></p>
+              </div>
+              <div id="adminUserList" class="directory-list"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

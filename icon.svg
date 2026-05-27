@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="FileDrop folder with files">
+  <rect width="128" height="128" rx="24" fill="#16231f"/>
+  <path d="M36 23h20l8 12h30c5.5 0 10 4.5 10 10v11H24V35c0-6.6 5.4-12 12-12Z" fill="#f6c453"/>
+  <path d="M42 18h42c3.3 0 6 2.7 6 6v54H42V18Z" fill="#f7fbf8"/>
+  <path d="M50 31h28M50 43h30M50 55h22" stroke="#8aa09a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 31h42c3.3 0 6 2.7 6 6v50H30V31Z" fill="#dfe9e6"/>
+  <path d="M38 45h24M38 57h28M38 69h20" stroke="#8aa09a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M22 50h84c5.5 0 9.7 4.8 8.9 10.2l-5.7 38.7c-.7 4.7-4.7 8.1-9.5 8.1H29.2c-4.8 0-8.8-3.4-9.5-8.1L13.1 60.2C12.3 54.8 16.5 50 22 50Z" fill="#f4c95d"/>
+  <path d="M24 58h80l-5.6 36H29.6L24 58Z" fill="#e3a92f" opacity=".55"/>
+  <path d="M38 82h52" stroke="#16231f" stroke-width="8" stroke-linecap="round"/>
+</svg>
