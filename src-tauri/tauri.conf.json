@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "identifier": "com.aberger94.filedrop",
   "build": {
-    "beforeDevCommand": "node server.js",
+    "beforeDevCommand": "node server.cjs",
     "beforeBuildCommand": "npm run build",
     "devUrl": "http://127.0.0.1:4180",
     "frontendDist": "../dist"
@@ -26,6 +26,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all"
+    "targets": "all",
+    "icon": ["icons/icon.ico", "icons/icon.png"]
   }
 }

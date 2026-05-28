@@ -42,6 +42,14 @@ http
       response.end(data);
     });
   })
+  .on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      console.log(`FileDrop server already running at http://${host}:${port}`);
+      process.exit(0);
+    }
+
+    throw error;
+  })
   .listen(port, host, () => {
     console.log(`FileDrop running at http://${host}:${port}`);
   });

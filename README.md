@@ -15,7 +15,7 @@ FileDrop is a browser-ready prototype for organization-based file sharing.
 ## Run Locally
 
 ```powershell
-node server.js
+node server.cjs
 ```
 
 Open `http://127.0.0.1:4180` from this folder.

@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "web:dev": "node server.js",
-    "build": "node scripts/build-desktop.mjs",
+    "web:dev": "node server.cjs",
+    "build": "node scripts/generate-tauri-icons.mjs && node scripts/build-desktop.mjs",
     "desktop:dev": "tauri dev",
     "desktop:build": "tauri build"
   },
